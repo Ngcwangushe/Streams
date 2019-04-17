@@ -1,0 +1,33 @@
+﻿@model Streams.ViewModels.MovieFormViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Movie</h2>
+
+
+@using (Html.BeginForm("Create"))
+{
+    <div>
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.ReleaseDate)
+        @Html.TextBoxFor(m => m.ReleaseDate, "{0:d MM YYY}", new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.GenreId)
+        @Html.DropDownListFor(m => m.GenreId, new SelectList(Model.Genres, "Id", "Name"), "", new { @class = "form-control" })
+
+    
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.NumberInStock)
+        @Html.TextBoxFor(m => m.NumberInStock, new { @class = "form-control" })
+    </div>
+}
+
+

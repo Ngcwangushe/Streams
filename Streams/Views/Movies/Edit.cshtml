@@ -1,0 +1,33 @@
+﻿@model Streams.ViewModels.MovieFormViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Movie</h2>
+
+
+@using (Html.BeginForm("Create"))
+{
+    <div>
+        @Html.LabelFor(m => m.Name)
+        @Html.HiddenFor(m => m.Name, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.ReleaseDate)
+        @Html.HiddenFor(m => m.ReleaseDate, "{0:d MM YYY}")
+    </div>
+    <div>
+        @Html.LabelFor(m => m.GenreId)
+        @Html.HiddenFor(m => m.GenreId)
+
+
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.NumberInStock)
+        @Html.HiddenFor(m => m.NumberInStock, new { @class = "form-control" })
+    </div>
+}
+
+
