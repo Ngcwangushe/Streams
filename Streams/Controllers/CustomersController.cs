@@ -62,12 +62,14 @@ namespace Streams.Controllers
                }
 
                if (customer.Id == 0)
-                _context.Customers.Add(customer);// Not inthe databse yet-Inthe memory
-            else
+               {
+                   _context.Customers.Add(customer); // Not inthe databse yet-Inthe memory
+               }
+               else
                {
                    var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);//Get from db--create database object
                    //----------------------------------------------
-                   //assigni ts properties
+                   //assigni its properties
                    customerInDb.Name = customer.Name;
                    customerInDb.Birthdate = customer.Birthdate;
                    customerInDb.MembershipTypeId = customer.MembershipTypeId;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using Streams.Dtos;
 using AutoMapper;
@@ -30,7 +31,7 @@ namespace Streams.Views.Customers.Api
         //GET /api/customers/1
         public IHttpActionResult GetCustomers(int id)
         {
-            var customer = _context.Customers.SingleOrDefault();
+            var customer = _context.Customers.SingleOrDefault(c=>c.Id == id);
             if(customer==null)
                 return  NotFound();
             return Ok(Mapper.Map<Customer, CustomerDto>(customer));
@@ -54,35 +55,36 @@ namespace Streams.Views.Customers.Api
 
         //POST /api/customers
         [HttpPut]
-        public void UpdateCustomers(CustomerDto customerDto, int id)
+        public IHttpActionResult UpdateCustomers(CustomerDto customerDto, int id)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
 
             var customerInDb = _context.Customers.SingleOrDefault(m=>m.Id== id);
 
             if (customerInDb == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return  NotFound();
 
             Mapper.Map(customerDto, customerInDb);
 
             
             _context.SaveChanges();
+            return Ok();
 
         }
 
         //DELETE /api/customers
         [HttpDelete]
-        public void DeleteCustomers(Customer customer, int id)
+        public IHttpActionResult DeleteCustomers(int id)
         {
-          
             var customerInDb = _context.Customers.SingleOrDefault(m => m.Id == id);
 
             if (customerInDb == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            
-            _context.Customers.Remove(customer);
+                return NotFound();
+
+            _context.Customers.Remove(customerInDb);
             _context.SaveChanges();
+            return Ok();
 
         }
 
