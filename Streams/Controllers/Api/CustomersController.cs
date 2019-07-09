@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Http;
 using Streams.Dtos;
 using AutoMapper;
+using System.Data.Entity;
 
 namespace Streams.Views.Customers.Api
 {
@@ -31,10 +32,11 @@ namespace Streams.Views.Customers.Api
         //GET /api/customers/1
         public IHttpActionResult GetCustomers(int id)
         {
-            var customer = _context.Customers.SingleOrDefault(c=>c.Id == id);
-            if(customer==null)
-                return  NotFound();
-            return Ok(Mapper.Map<Customer, CustomerDto>(customer));
+            var customer = _context.Customers
+                .Include(c=>c.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
+            return Ok(customer);
         }
 
         //POST /api/customers

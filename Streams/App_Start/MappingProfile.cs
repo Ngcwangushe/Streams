@@ -13,9 +13,12 @@ namespace Streams.App_Start
         public MappingProfile()
         {
 
-            //Mapp Objects
+            //Domain to Dtos
             Mapper.CreateMap<Customer, CustomerDto>();
-            Mapper.CreateMap<CustomerDto, Customer>();
+            Mapper.CreateMap<Movie, MovieDto>();
+            Mapper.CreateMap<MembershipType, MembershipTypeDto>();
+
+            
         }
     }
 }

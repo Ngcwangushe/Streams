@@ -5,7 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
+using System.Web.Http.Results;
 using System.Web.Mvc;
+using Streams.Dtos;
+using AutoMapper;
 
 namespace Streams.Controllers
 {
@@ -23,13 +27,10 @@ namespace Streams.Controllers
         // GET: Movies
         public ViewResult Index()
         {
-            //var customers = GetCustomers();
-            var customers = _context.Customers.Include(c=>c.MembershipType).ToList();
-            return View(customers);         
+            return View();         
         }
 
-        
-          public ActionResult New()//New Customer
+        public ActionResult New()//New Customer
         {
             var membershipTypes = _context.MembershipTypes.ToList();//Get list from db
             var viewModel = new CustomerFormViewModel()//Initialise viewModel
@@ -47,7 +48,7 @@ namespace Streams.Controllers
          2. Save changes
          3.Redirect User
              */
-        [HttpPost]//can only post with this action
+        [System.Web.Mvc.HttpPost]//can only post with this action
         [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer/*Model binding*/)
            {
@@ -78,7 +79,6 @@ namespace Streams.Controllers
                 //TryUpdateModel(customerInDb, "", new string [] {"Name", "Email"});
                 //--update properties base on key value pears in request data/ flord(Changes everything)
             }
-
             _context.SaveChanges();//persist the changes-all or noting //change tracking mechanism(in DbContext)
                                        //DbContext go through all modified statements-generate sql statements on runtime
                                        //and run them on the database--
@@ -111,50 +111,15 @@ namespace Streams.Controllers
 
 
 /*
-        [HttpPost]
-       /// [ValidateAntiForgeryToken]
-     
-        public ActionResult Save(Customer customer)
-        {
-            if (!ModelState.IsValid)
-            {
-                var viewModel = new CustomerFormViewModel
-                {
-                    Customer = customer,
-                    MembershipTypes = _context.MembershipTypes.ToList()
-                };
-
-                return View("CustomerForm", viewModel);
-            }
-
-            if (customer.Id == 0)
-                _context.Customers.Add(customer);
-            else
-            {
-                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
-                customerInDb.Name = customer.Name;
-                customerInDb.Birthdate = customer.Birthdate;
-                customerInDb.MembershipTypeId = customer.MembershipTypeId;
-                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
-            }
-
-            _context.SaveChanges();
-
-            return RedirectToAction("Index", "Customers");
-        }
-*/
-        //generate a list of Items
+//generate a list of Items
         /*  private IEnumerable<Customer> GetCustomers() {
               return new List<Customer>
               {
                   new Customer { Id = 1, Name = "John Smith"},
                   new Customer { Id = 2, Name = "Mary Williams"}
               };
-
-
           }
           
-         
          public ActionResult Create(Customer customer)//Model binding
         {
             _context.Customers.Add(customer);// Not inthe databse yet-Inthe memory
@@ -163,10 +128,6 @@ namespace Streams.Controllers
             //and run them on the database--
             return RedirectToAction("Index", "Customer");
         }
-
-
-
-
          */
     }
 }
