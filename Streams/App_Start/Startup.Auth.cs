@@ -55,8 +55,8 @@ namespace Streams
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: "2258309097621275",
-               appSecret: "ad066e081f3fd6236fb4996a53f8a1a7");
+               appId: "reducted",
+               appSecret: "secrete");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
