@@ -41,6 +41,7 @@ namespace Streams.Views.Customers.Api
         }
 
         //POST /api/customers
+
         [HttpPost]
         public IHttpActionResult CreateCustomers( CustomerDto customerDto)
         {
@@ -57,7 +58,9 @@ namespace Streams.Views.Customers.Api
         }
 
         //POST /api/customers
+
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public IHttpActionResult UpdateCustomers(CustomerDto customerDto, int id)
         {
             if (!ModelState.IsValid)
@@ -78,6 +81,7 @@ namespace Streams.Views.Customers.Api
 
         //DELETE /api/customers
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public IHttpActionResult DeleteCustomers(int id)
         {
             var customerInDb = _context.Customers.SingleOrDefault(m => m.Id == id);

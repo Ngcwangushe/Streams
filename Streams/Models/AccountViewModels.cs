@@ -8,6 +8,10 @@ namespace Streams.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Driving Licence")]
+        public string DrivingLicence { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -79,6 +83,10 @@ namespace Streams.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Driving Licence")]
+        public string DrivingLicence { get; set; }
     }
 
     public class ResetPasswordViewModel

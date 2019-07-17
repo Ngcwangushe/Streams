@@ -152,7 +152,10 @@ namespace Streams.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email,
+                    Email = model.Email,
+                    DrivingLicence = model.DrivingLicence
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -162,7 +165,7 @@ namespace Streams.Controllers
                     //var roleManager = new RoleManager<IdentityRole>(roleStore);
                     //await roleManager.CreateAsync(new IdentityRole("CanManagerMovies"));
 
-                    await UserManager.AddToRoleAsync(user.Id, "CanManagerMovies");
+                    await UserManager.AddToRoleAsync(user.Id, RoleName.CanManageMovies);
 
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -377,7 +380,9 @@ namespace Streams.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email,
+                    Email = model.Email,
+                    DrivingLicence = model.DrivingLicence };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

@@ -23,14 +23,11 @@ namespace Streams.Controllers
         // GET: Movies
         public ViewResult Index()
         {
-            var movie = _context.Movies.Include(c => c.Genre).ToList();
-            if (User.IsInRole("CanManageMovies"))
-
-                return View("List", movie);
-            
-            return View("ReadOnlyList", movie);         
+            if (User.IsInRole(RoleName.CanManageMovies))
+                return View("List");
+            return View("ReadOnlyList");         
         }
-       
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ViewResult New()
         {
             var genres = _context.Genres.ToList();
@@ -43,6 +40,7 @@ namespace Streams.Controllers
             return View("MovieForm", viewModel);
         }
 
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
             var movie = _context.Movies.SingleOrDefault(c => c.Id == id);//Sing record from db
