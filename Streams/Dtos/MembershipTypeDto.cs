@@ -10,8 +10,8 @@ namespace Streams.Dtos
     {
         public int Id { get; set; }
 
-        [Required]//Change default settings for Name in entiity framework
-        [StringLength(255)]
+        //[Required]//Change default settings for Name in entiity framework
+        //[StringLength(255)]
         public string Name { get; set; }
     }
 }

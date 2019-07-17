@@ -24,7 +24,9 @@ namespace Streams.Views.Customers.Api
         //GET /api/customers
         public IEnumerable<CustomerDto> GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            return _context.Customers
+                .Include(c=>c.MembershipType)
+                .ToList().Select(Mapper.Map<Customer, CustomerDto>);
         }
 
         //()Method <>deligate reference to the Method
@@ -33,9 +35,8 @@ namespace Streams.Views.Customers.Api
         public IHttpActionResult GetCustomers(int id)
         {
             var customer = _context.Customers
-                .Include(c=>c.MembershipType)
-                .ToList()
-                .Select(Mapper.Map<Customer, CustomerDto>);
+                .SingleOrDefault(c=>c.Id == id);
+                
             return Ok(customer);
         }
 

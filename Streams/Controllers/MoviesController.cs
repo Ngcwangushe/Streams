@@ -23,9 +23,12 @@ namespace Streams.Controllers
         // GET: Movies
         public ViewResult Index()
         {
+            var movie = _context.Movies.Include(c => c.Genre).ToList();
+            if (User.IsInRole("CanManageMovies"))
 
-            var movie = _context.Movies.Include(c=>c.Genre).ToList();
-            return View(movie);         
+                return View("List", movie);
+            
+            return View("ReadOnlyList", movie);         
         }
        
         public ViewResult New()
