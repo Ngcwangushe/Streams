@@ -2,10 +2,10 @@
 
 Streams is a Movie Rental Application built with ASP.NET MVC C#
 
-Seed admin user and Guest user when running application
-Admin :username admin@streams.com password #23@Ubuntu
+The application seeds admin user and Guest user with first migration
+Admin:- username: admin@streams.com | password: #23@Ubuntu
 
-Guest :username guest@streams.com password #23@Ubuntu
+Guest:- username: guest@streams.com | password: #23@Ubuntu
 
 run:
 Clone with visual studio 2017 or later
