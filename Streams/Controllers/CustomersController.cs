@@ -10,6 +10,7 @@ using System.Web.Http.Results;
 using System.Web.Mvc;
 using Streams.Dtos;
 using AutoMapper;
+using HttpPostAttribute = System.Web.Http.HttpPostAttribute;
 
 namespace Streams.Controllers
 {
@@ -48,7 +49,7 @@ namespace Streams.Controllers
          2. Save changes
          3.Redirect User
              */
-        [System.Web.Mvc.HttpPost]//can only post with this action
+        [HttpPost]//can only post with this action
         [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer/*Model binding*/)
            {

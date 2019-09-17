@@ -28,7 +28,9 @@ namespace Streams.Models
         [Display(Name = "Number In Stock")]
         [Range(1,20)]
         [Required]
-        public int NumberInStock { get; set; }
+        public byte NumberInStock { get; set; }
+
+        public byte NumberAvailable { get; set; }
 
         [Require]
         public byte GenreId { get; set; }//Convension/Foreign key
