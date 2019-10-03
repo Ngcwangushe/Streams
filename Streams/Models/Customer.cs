@@ -14,12 +14,15 @@ namespace Streams.Models
         [StringLength(255)]
         public string Name { get; set; }
 
+        [Required]
         public bool IsSubscribedToNewsletter { get; set; }
        
         //Allows navigation from one type to another
         //lode an object and its related object from the databasex
+        [Required]
         [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }//Mind convension/Foreign key
+
         public MembershipType MembershipType { get; set; }//Navigation Property
 
         [Min18YearsIfAMember]

@@ -303,6 +303,10 @@
     <Compile Include="Migrations\201909171018275_NumberAvailableToMovieModel.Designer.cs">
       <DependentUpon>201909171018275_NumberAvailableToMovieModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909191141007_MakeReturnDateNullable.cs" />
+    <Compile Include="Migrations\201909191141007_MakeReturnDateNullable.Designer.cs">
+      <DependentUpon>201909191141007_MakeReturnDateNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -437,6 +441,7 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\typeahead.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -664,6 +669,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909171018275_NumberAvailableToMovieModel.resx">
       <DependentUpon>201909171018275_NumberAvailableToMovieModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909191141007_MakeReturnDateNullable.resx">
+      <DependentUpon>201909191141007_MakeReturnDateNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

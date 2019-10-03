@@ -7,7 +7,7 @@ namespace Streams.Dtos
 {
     public class NewRentalDto
     {
-        public byte CustomerId { get; set; }
+        public int CustomerId { get; set; }
         public List<int> MovieIds { get; set; }
     }
 }

@@ -1,23 +1,126 @@
 ﻿@model dynamic
 @{
     ViewBag.Title = "New Rental Form";
-    Layout = "Layout";
 }
 
 <h2>New Rental Form</h2>
 
-<form>
+<form id="newRental">
 
-    <div class="form-control">
+    <div class="form-group">
         <label>Customer</label>
-        <input type="text" value="" class="form-control" />
+        <div class="tt-container">
+            <input id="customer" name="customer" required data-rule-validCustomer="true" type="text" value="" class="form-control" />
+        </div>
     </div>
 
-    <div class="form-control">
+    <div class="form-group">
         <label>Movie</label>
-        <input type="text" value="" class="form-control" />
+        <div class="tt-container">
+            <input id="movie" name="movie" data-rule-minimumSelection="true" type="text" value="" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <ul id="movies" class="list-group"></ul>
+        </div>
     </div>
 
     <button class="btn btn-primary">submit</button>
-
 </form>
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval");
+    <script>
+        $(document).ready(function () {
+
+            var vm = {
+                movieIds:[]
+            }; //view model black object
+
+            var customers = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/customers',
+                remote: {
+                    url: '/api/customers?query=%QUERY.json',
+                    wildcard: '%QUERY'
+                }
+            });
+            $('#customer').typeahead({
+                minLength: 3,
+                highlight: true
+            }, {
+                name: 'customers',
+                display: 'name',
+                    source: customers
+                }).on("typeahead:select", function (e, customer) {
+                    vm.customerId = customer.id;
+                });
+
+
+            var movies = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: '/api/Movies',
+                remote: {
+                    url: '/api/movies?query=%QUERY.json',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#movie').typeahead({
+                minLength: 3,
+                highlight: true
+            }, {
+                name: 'movies',
+                display: 'name',
+                source: movies
+            }).on("typeahead:select", function (e, movie) {
+                
+                $("#movies").append("<li class='list-group-item'>" + movie.name + "</li>");
+                $("#movie").typeahead("val", "");
+                vm.movieIds.push(movie.id);
+                });
+
+            $.validator.addMethod("validCustomer", function () {
+                return vm.customerId && vm.customerId !== 0;
+            }, "Please select a valid customer.");
+
+            $.validator.addMethod("minimumSelection", function () {
+                return vm.movieIds.length > 0;
+            }, "Please select atleast one movie.");
+
+            var validator = $("#newRental").validate({
+                submitHandler: function () {
+                    $.ajax({
+                        url: "/api/newRentals",
+                        method: "post",
+                        data: vm
+                    })
+                    .done(function () {
+                        toastr.success("Rentals Successfully Recorded.");
+
+                        $("#customer").typeahead("val", "");
+                        $("#movie").typeahead("val", "");
+                        $("#movies").empty();
+
+                        vm = { movieIds: [] }
+                        validator.resetForm();
+                    })
+                    .fail(function () {
+                       toastr.error("Somthing went rong");
+                        });
+                    return false;
+                }
+                
+            });
+            
+
+ 
+        });
+    </script>
+}

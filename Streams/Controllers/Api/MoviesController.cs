@@ -21,17 +21,27 @@ namespace Streams.Controllers.Api
         }
 
         //GET /api/customers
-        public IEnumerable<MovieDto> GetMovies()
+        public IHttpActionResult GetMovies(string query=null)
         {
-            return _context.Movies
-                .Include(m=>m.Genre)
-                .ToList().Select(Mapper.Map<Movie, MovieDto>);
+            var movieQuery = _context.Movies
+                .Include(m => m.Genre)
+                .Where(m => m.NumberAvailable > 0);
+
+            if (!String.IsNullOrWhiteSpace(query))
+            {
+                movieQuery = movieQuery.Where(m=>m.Name.Contains(query));
+            }    
+            var movieDto = movieQuery
+                .ToList()
+                .Select(Mapper.Map<Movie, MovieDto>);
+
+            return Ok(movieDto);
         }
 
         //()Method <>deligate reference to the Method
 
-        //GET /api/customers/1
-        public IHttpActionResult GetCustomers(int id)
+        //GET /api/customers/1  
+        public IHttpActionResult GetMovie(int id)
         {
             var movie = _context.Movies
                 .SingleOrDefault(m => m.Id == id);

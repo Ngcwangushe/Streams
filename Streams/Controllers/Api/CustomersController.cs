@@ -10,7 +10,7 @@ using Streams.Dtos;
 using AutoMapper;
 using System.Data.Entity;
 
-namespace Streams.Views.Customers.Api
+namespace Streams.Customers.Api
 {
     public class CustomersController : ApiController
     {
@@ -18,21 +18,28 @@ namespace Streams.Views.Customers.Api
 
         public CustomersController()
         {
-            _context=new ApplicationDbContext();
+            _context = new ApplicationDbContext();
         }
 
         //GET /api/customers
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers(string query = null)
         {
-            return _context.Customers
-                .Include(c=>c.MembershipType)
+            var customersQuery = _context.Customers
+                .Include(c => c.MembershipType);
+
+            if (!String.IsNullOrWhiteSpace(query))
+            {
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+            }
+
+            var customerDto = customersQuery
                 .ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            return Ok(customerDto);
         }
 
         //()Method <>deligate reference to the Method
-
         //GET /api/customers/1
-        public IHttpActionResult GetCustomers(int id)
+        public IHttpActionResult GetCustomer(int id)
         {
             var customer = _context.Customers
                 .SingleOrDefault(c=>c.Id == id);

@@ -1,4 +1,5 @@
-﻿using Streams.Dtos;
+﻿using AutoMapper;
+using Streams.Dtos;
 using Streams.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.Entity;
 
 namespace Streams.Controllers.Api
 {
@@ -21,11 +23,15 @@ namespace Streams.Controllers.Api
             _context.Dispose();
         }
 
-        IHttpActionResult CreateNewRentals(NewRentalDto newRental)
-        {
-            var customer = _context.Customers.Single(c => c.Id == newRental.CustomerId);
 
-            var movies = _context.Movies.Where(m=>newRental.MovieIds.Contains(m.Id));
+        [HttpPost]
+        public IHttpActionResult CreateNewRentals(NewRentalDto newRental)
+        {
+            var customer = _context.Customers.Single(
+                c => c.Id == newRental.CustomerId);
+
+            var movies = _context.Movies.Where(
+                m=>newRental.MovieIds.Contains(m.Id)).ToList();
 
             foreach (var movie in movies)
             {

@@ -16,7 +16,7 @@ namespace Streams.Models
         public Customer Customer { get; set; }
 
         public DateTime DateRanted { get; set; }
-        public DateTime DateReturned { get; set; }
+        public DateTime? DateReturned { get; set; }
 
 
     }

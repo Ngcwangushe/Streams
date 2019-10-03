@@ -8,7 +8,7 @@ namespace Streams.Dtos
 {
     public class MembershipTypeDto
     {
-        public int Id { get; set; }
+        public byte Id { get; set; }
 
         //[Required]//Change default settings for Name in entiity framework
         //[StringLength(255)]
