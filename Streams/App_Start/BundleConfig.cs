@@ -32,8 +32,9 @@ namespace Streams
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                          "~/Content/bootstrap.css",
+                         "~/Content/bootstrap-theme.css",
                          "~/Content/datatables/css/datatables.bootstrap.css",
-                         "~/Content/typeahead.css",
+                         "~/Content/typeahead2.css",
                           "~/Content/toastr.css",
                          "~/Content/site.css"));
             }
